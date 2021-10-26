@@ -12,6 +12,13 @@ IntelliJ Lua - [官方主页](https://likefr.com)
     <a href='https://gitter.im/meolu/walle-web'><img src='https://badges.gitter.im/Join%20Chat.svg'></a>
 </p>
 
+[![JetBrains Plugins](https://img.shields.io/jetbrains/plugin/v/9630-a8translate.svg)](https://plugins.jetbrains.com/)
+[![official JetBrains project](http://jb.gg/badges/official.svg)](https://confluence.jetbrains.com/display/ALL/JetBrains+on+GitHub)
+[![made-with-javascript](https://img.shields.io/badge/Made%20with-JavaScript-1f425f.svg)](https://www.javascript.com)
+[![C# Discord online members](https://badgen.net/discord/online-members/csharp)](https://discord.gg/csharp)
+[![GitLab latest release](https://badgen.net/gitlab/release/NickBusey/HomelabOS/)](https://gitlab.com/Likefr/IntelliJ-Lua)
+
+
 IntelliJ Lua是移植到Android平台的Lua解释器。其他人已经将 Lua 移植到 Android，但这个项目很特别：
 
 它包含LuaJava，因此您可以访问（几乎）Android API提供的所有内容
@@ -19,12 +26,6 @@ IntelliJ Lua是移植到Android平台的Lua解释器。其他人已经将 Lua �
 我创建它是因为我想学习如何使用Android NDK并探索 Android API，而不必为了测试几行代码而大惊小怪地创建项目、编写样板代码、编译和上传 APK。
 ## Discuss
  - QQ:[444583585](https://qm.qq.com/cgi-bin/qm/qr?k=L_IivoH9Y5BCtZ6ntIDu7U1aj_cTdCXK)
-[![JetBrains Plugins](https://img.shields.io/jetbrains/plugin/v/9630-a8translate.svg)](https://plugins.jetbrains.com/)
-[![official JetBrains project](http://jb.gg/badges/official.svg)](https://confluence.jetbrains.com/display/ALL/JetBrains+on+GitHub)
-[![made-with-javascript](https://img.shields.io/badge/Made%20with-JavaScript-1f425f.svg)](https://www.javascript.com)
-[![C# Discord online members](https://badgen.net/discord/online-members/csharp)](https://discord.gg/csharp)
-[![GitLab latest release](https://badgen.net/gitlab/release/NickBusey/HomelabOS/)](https://gitlab.com/Likefr/IntelliJ-Lua)
-
 
 
 
