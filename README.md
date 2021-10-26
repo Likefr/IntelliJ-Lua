@@ -29,6 +29,6 @@ IntelliJ Lua是移植到Android平台的Lua解释器。其他人已经将 Lua �
 
 
 ## Features 
- - [1] Android 11 export *.alp
+ - [x] Android 11 export *.alp
  - [ ] Code style
  - [ ] X5 Webview
