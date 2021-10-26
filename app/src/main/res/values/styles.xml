@@ -1,0 +1,145 @@
+<resources>
+    <style name="PickerEditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">4dp</item>
+        <item name="android:imeOptions">actionNext</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textSize">22sp</item>
+    </style>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+    <style name="MyTheme" parent="@style/Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">#ff009688</item>
+        <item name="colorAccent">#ff009688</item>
+     </style>
+    <style name="MyTheme_Drak" parent="@style/Theme.MaterialComponents.NoActionBar">
+        <item name="colorPrimary">#ff009688</item>
+        <item name="colorAccent">#ff009688</item>
+      </style>
+    <style name="AndLua1" parent="@style/Theme.MaterialComponents">
+        <item name="colorPrimary">#ff2196f3</item>
+        <item name="colorPrimaryDark">#ff2196f3</item>
+        <item name="colorAccent">#ff2196f3</item>
+        <item name="android:statusBarColor">#ff2196f3</item>
+    </style>
+    <style name="Theme.AndLua1" parent="@style/Theme.MaterialComponents">
+        <item name="colorPrimary">#ff2196f3</item>
+        <item name="colorPrimaryDark">#ff2196f3</item>
+        <item name="colorAccent">#ff2196f3</item>
+        <item name="android:statusBarColor">#ff2196f3</item>
+    </style>
+    <style name="AndroLua2" parent="@style/Theme.MaterialComponents.Light">
+        <item name="colorPrimary">#ff1976d2</item>
+        <item name="colorPrimaryDark">#ff1976d2</item>
+        <item name="colorAccent">#ff1976d2</item>
+        <item name="android:statusBarColor">#ff1976d2</item>
+    </style>
+
+    <style name="AndroLua3" parent="@style/Theme.MaterialComponents.Light">
+        <item name="colorPrimary">#ffff4081</item>
+        <item name="colorPrimaryDark">#ffff4081</item>
+        <item name="colorAccent">#ffff4081</item>
+        <item name="android:statusBarColor">#ffff4081</item>
+    </style>
+
+    <style name="AndroLua4" parent="@style/Theme.MaterialComponents.Light">
+        <item name="colorPrimary">#ff607d8b</item>
+        <item name="colorPrimaryDark">#ff607d8b</item>
+        <item name="colorAccent">#ff607d8b</item>
+        <item name="android:statusBarColor">#ff607d8b</item>
+    </style>
+    <style name="AndroLua5" parent="@style/Theme.MaterialComponents.Light">
+        <item name="colorPrimary">#ff455a64</item>
+        <item name="colorPrimaryDark">#ff455a64</item>
+        <item name="colorAccent">#ff455a64</item>
+        <item name="android:statusBarColor">#ff455a64</item>
+    </style>
+    <style name="AndroLua6" parent="@style/Theme.MaterialComponents.Light">
+        <item name="colorPrimary">#ff009688</item>
+        <item name="colorPrimaryDark">#ff009688</item>
+        <item name="colorAccent">#ff009688</item>
+        <item name="android:statusBarColor">#ff009688</item>
+    </style>
+    <style name="AndroLua7" parent="@style/Theme.MaterialComponents.Light">
+        <item name="colorPrimary">#ffd32f2f</item>
+        <item name="colorPrimaryDark">#ffd32f2f</item>
+        <item name="colorAccent">#ffd32f2f</item>
+        <item name="android:statusBarColor">#ffd32f2f</item>
+    </style>
+    <style name="AndroLua8" parent="@style/Theme.MaterialComponents.Light">
+        <item name="colorPrimary">#fff44336</item>
+        <item name="colorPrimaryDark">#fff44336</item>
+        <item name="colorAccent">#fff44336</item>
+        <item name="android:statusBarColor">#fff44336</item>
+    </style>
+    <style name="AndroLua9" parent="@style/Theme.MaterialComponents.Light">
+        <item name="colorPrimary">#ff795548</item>
+        <item name="colorPrimaryDark">#ff795548</item>
+        <item name="colorAccent">#ff795548</item>
+        <item name="android:statusBarColor">#ff795548</item>
+    </style>
+    <style name="AndroLua10" parent="@style/Theme.MaterialComponents.Light">
+        <item name="colorPrimary">#ff5d4037</item>
+        <item name="colorPrimaryDark">#ff5d4037</item>
+        <item name="colorAccent">#ff5d4037</item>
+        <item name="android:statusBarColor">#ff5d4037</item>
+    </style>
+    <style name="AndroLua11" parent="@style/Theme.MaterialComponents.Light">
+        <item name="colorPrimary">#ffffc107</item>
+        <item name="colorPrimaryDark">#ffffc107</item>
+        <item name="colorAccent">#ffffc107</item>
+        <item name="android:statusBarColor">#ffffc107</item>
+    </style>
+    <style name="AndroLua12" parent="@style/Theme.MaterialComponents.Light">
+        <item name="colorPrimary">#ffff9800</item>
+        <item name="colorPrimaryDark">#ffff9800</item>
+        <item name="colorAccent">#ffff9800</item>
+        <item name="android:statusBarColor">#ffff9800</item>
+    </style>
+    <style name="AndroLua13" parent="@style/Theme.MaterialComponents.Light">
+        <item name="colorPrimary">#fff57c00</item>
+        <item name="colorPrimaryDark">#fff57c00</item>
+        <item name="colorAccent">#fff57c00</item>
+        <item name="android:statusBarColor">#fff57c00</item>
+    </style>
+    <style name="AndroLua14" parent="@style/Theme.MaterialComponents.Light">
+        <item name="colorPrimary">#ff9e9e9e</item>
+        <item name="colorPrimaryDark">#ff9e9e9e</item>
+        <item name="colorAccent">#ff9e9e9e</item>
+        <item name="android:statusBarColor">#ff9e9e9e</item>
+    </style>
+    <style name="AndroLua15" parent="@style/Theme.MaterialComponents.Light">
+        <item name="colorPrimary">#ff000000</item>
+        <item name="colorPrimaryDark">#ff000000</item>
+        <item name="colorAccent">#ff000000</item>
+        <item name="android:statusBarColor">#ff000000</item>
+    </style>
+    <style name="AndroLua16" parent="@style/Theme.MaterialComponents.Light">
+        <item name="colorPrimary">#ff388e3c</item>
+        <item name="colorPrimaryDark">#ff388e3c</item>
+        <item name="colorAccent">#ff388e3c</item>
+        <item name="android:statusBarColor">#ff388e3c</item>
+    </style>
+    <style name="AndroLua17" parent="@style/Theme.MaterialComponents.Light">
+        <item name="colorPrimary">#ff8bc34a</item>
+        <item name="colorPrimaryDark">#ff8bc34a</item>
+        <item name="colorAccent">#ff8bc34a</item>
+        <item name="android:statusBarColor">#ff8bc34a</item>
+    </style>
+    <style name="AndroLua18" parent="@style/Theme.MaterialComponents.Light">
+        <item name="colorPrimary">#ff9c27b0</item>
+        <item name="colorPrimaryDark">#ff9c27b0</item>
+        <item name="colorAccent">#ff9c27b0</item>
+        <item name="android:statusBarColor">#ff9c27b0</item>
+    </style>
+    <style name="AndroLua19" parent="@style/Theme.MaterialComponents.Light">
+        <item name="colorPrimary">#ff7870bb</item>
+        <item name="colorPrimaryDark">#ff7870bb</item>
+        <item name="colorAccent">#ff7870bb</item>
+        <item name="android:statusBarColor">#ff7870bb</item>
+    </style>
+    
+</resources>

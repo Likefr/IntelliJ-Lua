@@ -1,0 +1,15 @@
+{
+  LinearLayout;
+  orientation="vertical";
+  layout_height="fill";
+  layout_width="fill";
+  {
+    ImageView,
+    layout_width="fill",
+    layout_height="fill",
+    
+scaleType="matrix";
+    --scaleType="fitXY",
+    id="img",
+  };
+};

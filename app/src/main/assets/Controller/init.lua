@@ -1,0 +1,11 @@
+appname="工程属性"
+appver="1.0"
+packagename="com.androlua.Controller"
+theme="Theme_DeviceDefault_Light_NoActionBar_Fullscreen"
+developer="nirenr"
+description="工程属性查看修改"
+debugmode=true
+user_permission={
+  "INTERNET",
+  "WRITE_EXTERNAL_STORAGE"
+}

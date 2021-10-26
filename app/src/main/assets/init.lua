@@ -1,0 +1,32 @@
+appname="IntelliJ Lua"
+appver="1.2.2"
+appcode="20211024"
+appsdk="21"
+packagename="com.Likefr.LuaJava"
+theme="Theme_DeviceDefault_Light_NoActionBar_Fullscreen"
+app_key="4yCilZ1F"
+app_channel=""
+developer=""
+description=""
+debugmode=true
+user_permission={
+  "ACCESS_MEDIA_LOCATION",
+  "ACCESS_NETWORK_STATE",
+  "ACCESS_WIFI_STATE",
+  "BIND_ACCESSIBILITY_SERVICE",
+  "CHANGE_NETWORK_STATE",
+  "CHANGE_WIFI_STATE",
+  "DOWNLOAD_WITHOUT_NOTIFICATION",
+  "GET_PACKAGE_SIZE",
+  "GET_TASKS",
+  "INTERNET",
+  "KILL_BACKGROUND_PROCESSES",
+  "READ_EXTERNAL_STORAGE",
+  "REQUEST_IGNORE_BATTERY_OPTIMIZATIONS",
+  "REQUEST_INSTALL_PACKAGES",
+  "SET_WALLPAPER",
+  "SYSTEM_ALERT_WINDOW",
+  "VIBRATE",
+  "WAKE_LOCK",
+  "WRITE_EXTERNAL_STORAGE"
+}
