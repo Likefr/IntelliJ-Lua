@@ -1,6 +1,16 @@
-![](https://i0.hdslb.com/bfs/album/967c56c11d67e4fb632ff9b5eb079599ae79dc6f.png)
-# IntelliJ-Lua
-Lua Apk
+
+<p align="center">
+ <img width="100px" src="https://i0.hdslb.com/bfs/album/967c56c11d67e4fb632ff9b5eb079599ae79dc6f.png" align="center" alt="GitHub Readme Stats" />
+ <h2 align="center">GitHub Readme Stats</h2>
+ <p align="center">Get dynamically generated GitHub stats on your readmes!</p>
+</p>
+
+IntelliJ Lua - [官方主页](https://likefr.com)
+=========================
+<p align="left">
+    <a href='https://travis-ci.org/meolu/walle-web'><img src='https://travis-ci.org/meolu/walle-web.svg?branch=master' alt="Build Status"></a>  
+    <a href='https://gitter.im/meolu/walle-web'><img src='https://badges.gitter.im/Join%20Chat.svg'></a>
+</p>
 
 IntelliJ Lua是移植到Android平台的Lua解释器。其他人已经将 Lua 移植到 Android，但这个项目很特别：
 
