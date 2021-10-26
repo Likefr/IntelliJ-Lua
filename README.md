@@ -1,8 +1,8 @@
 # IntelliJ-Lua
 Lua Apk
 
+[![Binder](https://binder.pangeo.io/badge_logo.svg)](https://binder.pangeo.io/v2/gh/Naereen/badges/master)
 
-![Profile views](https://gpvc.arturio.dev/Naereen)
 
 
 ### Contributor over time
