@@ -5,7 +5,7 @@
  <p align="center">Get dynamically generated GitHub stats on your readmes!</p>
 </p>
 
-IntelliJ Lua - [官方主页](https://likefr.com)
+IntelliJ Lua - [博客](https://likefr.com)
 =========================
 <p align="left">
     <a href='https://travis-ci.org/meolu/walle-web'><img src='https://travis-ci.org/meolu/walle-web.svg?branch=master' alt="Build Status"></a>  
