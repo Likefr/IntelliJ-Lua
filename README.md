@@ -15,8 +15,6 @@ IntelliJ Lua - [博客](https://likefr.com)
 [![JetBrains Plugins](https://img.shields.io/jetbrains/plugin/v/9630-a8translate.svg)](https://plugins.jetbrains.com/)
 [![official JetBrains project](http://jb.gg/badges/official.svg)](https://confluence.jetbrains.com/display/ALL/JetBrains+on+GitHub)
 [![made-with-javascript](https://img.shields.io/badge/Made%20with-JavaScript-1f425f.svg)](https://www.javascript.com)
-[![C# Discord online members](https://badgen.net/discord/online-members/csharp)](https://discord.gg/csharp)
-[![GitLab latest release](https://badgen.net/gitlab/release/NickBusey/HomelabOS/)](https://gitlab.com/Likefr/IntelliJ-Lua)
 
 
 IntelliJ Lua是移植到Android平台的Lua解释器。其他人已经将 Lua 移植到 Android，但这个项目很特别：
