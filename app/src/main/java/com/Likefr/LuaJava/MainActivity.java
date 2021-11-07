@@ -12,8 +12,10 @@ import android.view.WindowManager;
 import androidx.appcompat.app.AppCompatActivity;
 import com.Likefr.LuaJava.utils.PaperOnboardingEngine;
 import com.Likefr.LuaJava.utils.PaperOnboardingPage;
+
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -23,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         //不显示程序的标题栏
         requestWindowFeature( Window.FEATURE_NO_TITLE );
+// 在调用TBS初始化、创建WebView之前进行如下配置
 
         //不显示系统的标题栏
         getWindow().setFlags( WindowManager.LayoutParams.FLAG_FULLSCREEN,

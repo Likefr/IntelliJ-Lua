@@ -473,10 +473,13 @@ project_list.setOnItemLongClickListener(AdapterView.OnItemLongClickListener {--�
                 end
                 if titleName == "分享" then
                     --print(export(SELECT("Project_Path", SELECT("User_option", "Value")) .. project_name))
-                    Share.shareFile(this,export(SELECT("Project_Path", SELECT("User_option", "Value")) .. project_name))
+                    --Share.shareFile(this,export(SELECT("Project_Path", SELECT("User_option", "Value")) .. project_name))
+                   print("遇到了点问题",err)
                     AttributeDlog.dismiss()
                 end
                 if titleName == "打包" then
+                    --import "bin"
+                    --bin(path..project_title.."/")
                     activity.newActivity("Controller/bin", { path .. project_name .. "/" })
                     AttributeDlog.dismiss()
                 end

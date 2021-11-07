@@ -2,6 +2,15 @@
 <manifest
         xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
         package="com.Likefr.LuaJava">
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <!--    X5-->
     <!-- 拥有完全的网络访问权限 -->
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -39,6 +48,13 @@
     <!--  &lt;!&ndash; 读取手机状态和身份 &ndash;&gt;   <uses-permission android:name="android.permission.READ_PHONE_STATE" />-->
     <!-- 读取您的USB存储设备中的内容 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <!--tencent x5添加-->
+    <!--    <uses-permission android:name="android.permission.READ_PHONE_STATE" />-->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <!-- 硬件加速对X5视频播放非常重要，建议开启 -->
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <!--android 9.0上使用前台服务，需要添加权限 原生WebView未用到，可能x5需要-->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <!-- 读取手机状态和身份 -->
     <!--    <uses-permission android:name="android.permission.READ_PHONE_STATE" />-->
@@ -65,13 +81,6 @@
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES"/>
     <!-- 更改网络连接性 -->
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
-    <!-- tencent x5添加 -->
-    <!--     <uses-permission android:name="android.permission.READ_PHONE_STATE" /> -->
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
-    <!--  硬件加速对X5视频播放非常重要，建议开启  -->
-    <uses-permission android:name="android.permission.GET_TASKS"/>
-    <!-- android 9.0上使用前台服务，需要添加权限 原生WebView未用到，可能x5需要 -->
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <!-- 访问蓝牙设置 -->
     <!--    <uses-permission android:name="android.permission.BLUETOOTH" />-->
     <!-- &lt;!&ndash; 读取通话记录 &ndash;&gt;
@@ -90,11 +99,13 @@
             android:supportsPictureInPicture="true"
             android:usesCleartextTraffic="true"
             android:allowBackup="true"
+            android:hardwareAccelerated ="true"
             android:icon="@drawable/icon"
             android:label="IntelliJ Lua"
             android:theme="@style/AppTheme" tools:targetApi="r">
-        <!-- tencent x5 页面 使用的是Apache HTTP客户端 适配SDK 28 -->
-        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
+        <uses-library
+                android:name="org.apache.http.legacy"
+                android:required="false"/>
         <meta-data
                 android:name="android.max_aspect"
                 android:value="4.0"/>
@@ -135,20 +146,25 @@
                         android:mimeType="application/alp"/>
             </intent-filter>
         </activity>
+        <service
+                android:name="com.tencent.smtt.export.external.DexClassLoaderProviderService"
+                android:label="dexopt"
+                android:process=":dexopt" >
+        </service>
         <activity
                 android:label="IntelliJ Lua"
                 android:name="com.androlua.LuaActivity"
                 android:hardwareAccelerated="true"
-                android:configChanges="orientation|screenSize|keyboardHidden">
+                android:configChanges="orientation|screenSize|keyboardHidden"
+                android:screenOrientation="portrait"
+                android:theme="@style/WebViewTheme"
+                tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action
                         android:name="android.intent.action.VIEW"/>
-                <category
-                        android:name="android.intent.category.DEFAULT"/>
-                <category
-                        android:name="android.intent.category.BROWSABLE"/>
-                <data android:scheme="androlua"/>
-                <data android:host="com.androlua"/>
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>
             <intent-filter>
                 <action
@@ -180,15 +196,15 @@
         </activity>
         <activity android:name="com.androlua.Welcome"/>
         <activity
-                android:configChanges="keyboardHidden|orientation|screenSize"
+                android:configChanges="keyboardHidden|orientation|screenSize" android:documentLaunchMode="intoExisting"
                 android:excludeFromRecents="false"
                 android:label="IntelliJ Lua"
-                android:hardwareAccelerated="true"
-                android:name="com.androlua.LuaActivityX"/>
-<!--        portrait  横向   full xxxx 自动-->
+                android:name="com.androlua.LuaActivityX"
+                android:screenOrientation="portrait"/>
         <activity
                 android:label="IntelliJ Lua"
-                android:name=".MainActivity">
+                android:name=".MainActivity"
+                android:screenOrientation="portrait">
             <intent-filter>
                 <action
                         android:name="android.intent.action.MAIN"/>
@@ -222,25 +238,8 @@
                         android:name="android.accessibilityservice.category.FEEDBACK_SPOKEN"/>
             </intent-filter>
         </service>
-<!--        分享路径  -->
-<!--        <provider
-                android:authorities="${applicationId}.fileprovider"
-                android:exported="false"
-                android:grantUriPermissions="true"
-                android:name="android.content.FileProvider">
-            <meta-data
-                    android:name="android.support.FILE_PROVIDER_PATHS"
-                    android:resource="@xml/androlua_filepaths" />
-        </provider>-->
-        <!--    文件打包安装访问根路径     -->
-        <provider
-                android:authorities="com.Likefr.LuaJava"
-                android:exported="false"
-                android:grantUriPermissions="true"
-                android:name="android.content.FileProvider">
-            <meta-data
-                    android:name="android.support.FILE_PROVIDER_PATHS"
-                    android:resource="@xml/androlua_filepaths" />
+        <provider android:authorities="com.Likefr.LuaJava.fileprovider" android:exported="false" android:grantUriPermissions="true" android:name="android.content.FileProvider">
+            <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/androlua_filepaths"/>
         </provider>
     </application>
 

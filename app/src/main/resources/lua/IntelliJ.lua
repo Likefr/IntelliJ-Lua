@@ -17,7 +17,7 @@ import "android.os.Environment"
 import "android.content.Context"
 import "android.graphics.Typeface"
 import "android.view.WindowManager"
-
+import "com.Likefr.tencentx5.WebViewX"
 import "android.graphics.drawable.*"
 import "android.widget.LinearLayout"
 import "android.Manifest"
@@ -113,29 +113,29 @@ function ReturnConfig()
             end
             return _resultData
         end
-        local data = io.open(activity.getLuaDir() .. "/config.json"):read("*a")
+        data = io.open(activity.getLuaDir() .. "/config.json"):read("*a")
         data = cjson.decode(data)
         data = dataModel.fromJson(data.data)
         webSettings = webview.getSettings();
         webSettings.setJavaScriptEnabled(true)
         webSettings.setUseWideViewPort(true);
-        webSettings.setLoadWithOverviewMode(true);
-        webSettings.setDomStorageEnabled(true);
+        --webSettings.setLoadWithOverviewMode(true);
+        --webSettings.setDomStorageEnabled(true);
 
         if (data.ua ~= nil) then
             newUserAgent = data.ua
         else
-            newUserAgent = "Mozilla/5.0 (Linux; Android 6.0; NEM-AL10 Build/HONORNEM-AL10; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/63.0.3239.111 Mobile Safari/537.36 lite baiduboxapp/2.7.0.10 (Baidu; P1 6.0)";
+            newUserAgent = ''
+           -- newUserAgent = "Mozilla/5.0 (Linux; Android 6.0; NEM-AL10 Build/HONORNEM-AL10; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/63.0.3239.111 Mobile Safari/537.36 lite baiduboxapp/2.7.0.10 (Baidu; P1 6.0)";
         end
         webSettings.setUserAgentString(newUserAgent);
         webSettings.setTextZoom(100)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) then
-            webSettings.setMixedContentMode(
-                    webSettings.MIXED_CONTENT_COMPATIBILITY_MODE);
+            webSettings.setMixedContentMode(webSettings.MIXED_CONTENT_COMPATIBILITY_MODE);
             webSettings.setMixedContentMode(webSettings.MIXED_CONTENT_ALWAYS_ALLOW);
         end
-        webview.loadUrl(data.url)--加载网页
+
         function 加载js(id, js)
             if js == nil then
             else
@@ -149,18 +149,27 @@ function ReturnConfig()
                 加载js(id, [[var idObject = document.getElementById(']] .. V .. [[');if (idObject != null) idObject.parentNode.removeChild(idObject);]])
             end
         end
+        yy = string.split(data.ad, ",")
         webview.setWebViewClient {
             shouldOverrideUrlLoading = function(view, url)
-                加载js(webview, data.js)
-            end,
-            onPageStarted = function(view, url, favicon)
-                加载js(webview, data.js)
-            end,
-            onPageFinished = function(view, url)
-                yy = string.split(data.ad, ",")
                 for k, v in ipairs(yy) do
                     屏蔽元素(webview, { v })
                     --print(v)
+                end
+                加载js(webview, data.js)
+            end,
+            onPageStarted = function(view, url, favicon)
+                for k, v in ipairs(yy) do
+                    屏蔽元素(webview, { v })
+                    --print(v)
+                end
+                加载js(webview, data.js)
+            end,
+            onPageFinished = function(view, url)
+
+                for k, v in ipairs(yy) do
+                    屏蔽元素(webview, { v })
+                    --print(i)
                 end
                 加载js(webview, data.js)
             end,
@@ -168,6 +177,7 @@ function ReturnConfig()
                 handler.proceed();
             end
         }
+        webview.loadUrl(data.url)--加载网页
         return data;
     else
         return "该工程没有config文件"
@@ -1462,22 +1472,6 @@ function 获取应用信息(archiveFilePath)
     return packageName, version, icon
 end
 
-function 获取歌曲信息(data)
-    --路径
-    import "android.media.MediaMetadataRetriever"
-    import "java.io.File"
-
-    data = File(data)
-    mmr = MediaMetadataRetriever()
-    mmr.setDataSource(data.getAbsolutePath())
-    ablumString = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM);--获得音乐专辑的标题
-    artistString = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);--获取音乐的艺术家信息
-    titleString = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);--获取音乐标题信息
-    mimetypeString = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_MIMETYPE);--获取音乐mime类型
-    durationString = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);--获取音乐持续时间
-    bitrateString = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_BITRATE);--获取音乐比特率，位率
-    dateString = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DATE);--获取音乐的日期
-end
 
 function Base64加密(data)
     --编码

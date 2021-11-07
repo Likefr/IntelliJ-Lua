@@ -226,7 +226,7 @@ popadp.add { popadp_text = "搜索" }
 popadp.add { popadp_text = "替换" }
 popadp.add { popadp_text = "导航" }
 popadp.add { popadp_text = "全局搜索", }
-popadp.add { popadp_text = "打包项目" }
+--popadp.add { popadp_text = "打包项目" }
 popadp.add { popadp_text = "导入分析", }
 popadp.add { popadp_text = "API查找", }
 popadp.add { popadp_text = "APK签名" }
@@ -426,8 +426,7 @@ Popup_list.setOnItemClickListener(AdapterView.OnItemClickListener {
    activity.newActivity("Controller/SignBin")
    elseif s == "打包项目" then
    editor.save(path .. project_title .. "/" .. sub_title.getText())
-   activity.newActivity("Controller/bin", { "/" .. path .. project_title .. "/" })
-
+   activity.newActivity("bin", { path .. project_title .. "/" })
    elseif s == "全局搜索" then
    pageview.showPage(4)
 

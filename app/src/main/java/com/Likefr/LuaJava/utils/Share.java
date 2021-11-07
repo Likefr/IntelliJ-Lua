@@ -22,7 +22,7 @@ public class Share {
         if (null != file && file.exists()) {
             Intent share = new Intent(Intent.ACTION_SEND);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                Uri contentUri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".fileprovider",file);
+                Uri contentUri = FileProvider.getUriForFile(context,  "com.Likefr.LuaJava.fileprovider",file);
                 share.putExtra(Intent.EXTRA_STREAM, contentUri);
                 share.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             } else {

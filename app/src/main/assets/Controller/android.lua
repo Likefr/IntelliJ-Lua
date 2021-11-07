@@ -142,6 +142,7 @@ return {
 "com.androlua.LuaWebView$OnDownloadStartListener",
 "com.androlua.LuaWebView$SimpleLuaWebViewClient",
 "com.androlua.LuaWebView",
+"com.Likefr.tencentx5.WebViewX"
 "com.androlua.NineBitmapDrawable",
 "com.androlua.R$drawable",
 "com.androlua.R$string",

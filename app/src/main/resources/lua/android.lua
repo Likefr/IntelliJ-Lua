@@ -844,6 +844,7 @@ return {
 "android.webkit.URLUtil",
 "android.webkit.RenderProcessGoneDetail",
 "android.webkit.WebView",
+"com.Likefr.tencentx5.WebViewX"
 "android.webkit.ServiceWorkerController",
 "android.webkit.ConsoleMessage$MessageLevel",
 "android.app.Activity",
