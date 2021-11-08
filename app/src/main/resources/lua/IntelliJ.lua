@@ -136,47 +136,38 @@ function ReturnConfig()
             webSettings.setMixedContentMode(webSettings.MIXED_CONTENT_ALWAYS_ALLOW);
         end
 
-        function 加载js(id, js)
-            if js == nil then
-            else
-                id.loadUrl("javascript:" .. "(function() {" .. js .. "})()")
-            end
-        end
 
-        function 屏蔽元素(id, table)
-            for i, V in pairs(table) do
-                加载js(id, [[document.getElementsByClassName(']] .. V .. [[')[0].style.display='none';]])
-                加载js(id, [[var idObject = document.getElementById(']] .. V .. [[');if (idObject != null) idObject.parentNode.removeChild(idObject);]])
-            end
-        end
-        yy = string.split(data.ad, ",")
-        webview.setWebViewClient {
-            shouldOverrideUrlLoading = function(view, url)
-                for k, v in ipairs(yy) do
-                    屏蔽元素(webview, { v })
-                    --print(v)
-                end
-                加载js(webview, data.js)
-            end,
-            onPageStarted = function(view, url, favicon)
-                for k, v in ipairs(yy) do
-                    屏蔽元素(webview, { v })
-                    --print(v)
-                end
-                加载js(webview, data.js)
-            end,
-            onPageFinished = function(view, url)
 
-                for k, v in ipairs(yy) do
-                    屏蔽元素(webview, { v })
-                    --print(i)
-                end
-                加载js(webview, data.js)
-            end,
-            onReceivedSslError = function(view, handler, error)
-                handler.proceed();
-            end
-        }
+webview.setWebViewClient{
+  shouldOverrideUrlLoading=function(view,url)
+    --Url即将跳转
+  end,
+  onPageStarted=function(view,url,favicon)
+    --网页加载
+  end,
+  onPageFinished=function(view,url)
+    --网页加载完成
+    屏蔽元素(webview,{data.ad})
+  end}
+
+
+function 加载js(id,js)
+  if js==nil then
+   else
+      id.loadUrl("javascript:".."(function() {"..js.."})()")
+  end
+end
+
+
+function 屏蔽元素(id,table)
+  for i,V in pairs(table) do
+  print(V)
+    加载js(id,[[document.getElementsByClassName(']]..V..[[')[0].style.display='none';]])
+     end
+end
+
+
+
         webview.loadUrl(data.url)--加载网页
         return data;
     else
