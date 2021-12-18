@@ -139,36 +139,27 @@ function ReturnConfig()
 
 
 webview.setWebViewClient{
-  shouldOverrideUrlLoading=function(view,url)
-    --Url即将跳转
-  end,
-  onPageStarted=function(view,url,favicon)
-    --网页加载
-  end,
   onPageFinished=function(view,url)
     --网页加载完成
-    屏蔽元素(webview,{data.ad})
-  end}
+--     屏蔽元素(webview,{data.ad})
+  end
+  }
 
 
 function 加载js(id,js)
   if js==nil then
    else
-      id.loadUrl("javascript:".."(function() {"..js.."})()")
+      id.loadUrlX("javascript:".."(function() {"..js.."})()")
   end
 end
 
 
 function 屏蔽元素(id,table)
   for i,V in pairs(table) do
-  print(V)
     加载js(id,[[document.getElementsByClassName(']]..V..[[')[0].style.display='none';]])
      end
 end
-
-
-
-        webview.loadUrl(data.url)--加载网页
+        webview.loadUrlX(data.url,data.ad)--加载网页
         return data;
     else
         return "该工程没有config文件"

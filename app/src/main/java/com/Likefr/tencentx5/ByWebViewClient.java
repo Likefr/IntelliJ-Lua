@@ -37,22 +37,7 @@ public class ByWebViewClient extends WebViewClient {
 
 
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    @Override
-    public boolean shouldOverrideUrlLoading(android.webkit.WebView view, WebResourceRequest request) {
-        String url = request.getUrl().toString();
-        if (TextUtils.isEmpty(url)) {
-            return false;
-        }
-
-            Activity mActivity = this.mActivityWeakReference.get();
-            if (mActivity != null && !mActivity.isFinishing()) {
-                return ByWebTools.handleThirdApp(mActivity, url);
-            } else {
-                return !url.startsWith("http:") && !url.startsWith("https:");
-            }
-
-    }
+/*
 
     @Override
     public boolean shouldOverrideUrlLoading(android.webkit.WebView view, String url) {
@@ -67,19 +52,16 @@ public class ByWebViewClient extends WebViewClient {
                 return !url.startsWith("http:") && !url.startsWith("https:");
             }
         }
+*/
 
 
     @Override
     public void onPageStarted(android.webkit.WebView view, String url, Bitmap favicon) {
- onPageStarted(view, url, favicon);
         super.onPageStarted(view, url, favicon);
     }
 
     @Override
     public void onPageFinished(android.webkit.WebView view, String url) {
-        // html加载完成之后，添加监听图片的点击js函数
-        Activity mActivity = this.mActivityWeakReference.get();
-
         super.onPageFinished(view, url);
     }
 
@@ -90,7 +72,6 @@ public class ByWebViewClient extends WebViewClient {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             return;
         }
-        mByWebViewX.showErrorView();
     }
 
     @Override
@@ -110,8 +91,7 @@ public class ByWebViewClient extends WebViewClient {
     public void onReceivedError(android.webkit.WebView view, WebResourceRequest request, WebResourceError error) {
         super.onReceivedError(view, request, error);
         if (request.isForMainFrame()) {
-            // 是否是为 main frame创建
-            mByWebViewX.showErrorView();
+            System.out.println("LIKEFR ----》onReceivedError");
         }
     }
 

@@ -1,6 +1,5 @@
 package com.Likefr.tencentx5;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -13,6 +12,7 @@ import android.view.View;
 import android.webkit.PermissionRequest;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
+import android.webkit.WebView;
 import android.widget.FrameLayout;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -29,7 +29,7 @@ import java.lang.ref.WeakReference;
 public class ByWebChromeClient extends WebChromeClient {
 
     private WeakReference<Activity> mActivityWeakReference = null;
-    private WebViewX mByWebViewX;
+    private final WebViewX mByWebViewX;
     private ValueCallback<Uri> mUploadMessage;
     private ValueCallback<Uri[]> mUploadMessageForAndroid5;
     private static int RESULT_CODE_FILE_CHOOSER = 1;
@@ -50,7 +50,6 @@ public class ByWebChromeClient extends WebChromeClient {
     }
 
 
-
     public void setFixScreenLandscape(boolean fixScreenLandscape) {
         isFixScreenLandscape = fixScreenLandscape;
     }
@@ -62,7 +61,6 @@ public class ByWebChromeClient extends WebChromeClient {
     /**
      * 播放网络视频时全屏会被调用的方法
      */
-    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     public void onShowCustomView(View view, CustomViewCallback callback) {
         Activity mActivity = this.mActivityWeakReference.get();
@@ -92,7 +90,6 @@ public class ByWebChromeClient extends WebChromeClient {
     /**
      * 视频播放退出全屏会被调用的
      */
-    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     public void onHideCustomView() {
         Activity mActivity = this.mActivityWeakReference.get();
@@ -105,7 +102,6 @@ public class ByWebChromeClient extends WebChromeClient {
             if (!isFixScreenPortrait) {
                 mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
             }
-
             mCustomView.setVisibility(View.GONE);
             if (videoFullView != null) {
                 videoFullView.removeView(mCustomView);
@@ -130,16 +126,14 @@ public class ByWebChromeClient extends WebChromeClient {
 
     @Override
     public void onProgressChanged(android.webkit.WebView view, int newProgress) {
-        super.onProgressChanged(view, newProgress);
-
         // 当显示错误页面时，进度达到100才显示网页
-        if (mByWebViewX.getWebView() != null
-                && mByWebViewX.getWebView().getVisibility() == View.INVISIBLE
-                && (mByWebViewX.getErrorView() == null || mByWebViewX.getErrorView().getVisibility() == View.GONE)
-                && newProgress == 100) {
-            mByWebViewX.getWebView().setVisibility(View.VISIBLE);
-        }
-
+//        if (mByWebViewX.getWebView() != null
+//                && mByWebViewX.getWebView().getVisibility() == View.INVISIBLE
+//                && (mByWebViewX.getErrorView() == null || mByWebViewX.getErrorView().getVisibility() == View.GONE)
+//                && newProgress == 100) {
+//            mByWebViewX.getWebView().setVisibility(View.VISIBLE);
+//        }
+        super.onProgressChanged(view, newProgress);
     }
 
     /**
@@ -248,7 +242,7 @@ public class ByWebChromeClient extends WebChromeClient {
     public void onPermissionRequest(PermissionRequest request) {
         super.onPermissionRequest(request);
         // 部分页面可能崩溃
-//        request.grant(request.getResources());
+        request.grant(request.getResources());
     }
 
     ByFullscreenHolder getVideoFullView() {

@@ -113,8 +113,7 @@
                 android:theme="@android:style/Theme.Material.Light.NoActionBar"
                 android:label="导入alp"
                 android:name="com.androlua.Main"
-                android:launchMode="singleTask"
-                android:configChanges="keyboardHidden|orientation|screenSize">
+                android:launchMode="singleTask">
             <intent-filter>
                 <action
                         android:name="android.intent.action.VIEW"/>
@@ -146,11 +145,6 @@
                         android:mimeType="application/alp"/>
             </intent-filter>
         </activity>
-        <service
-                android:name="com.tencent.smtt.export.external.DexClassLoaderProviderService"
-                android:label="dexopt"
-                android:process=":dexopt" >
-        </service>
         <activity
                 android:label="IntelliJ Lua"
                 android:name="com.androlua.LuaActivity"
@@ -162,7 +156,6 @@
             <intent-filter>
                 <action
                         android:name="android.intent.action.VIEW"/>
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>

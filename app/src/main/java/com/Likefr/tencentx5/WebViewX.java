@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,12 +14,11 @@ import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
-import androidx.annotation.LayoutRes;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import com.Likefr.LuaJava.R;
 import com.androlua.LuaActivity;
 import com.androlua.LuaWebView;
+
+import java.net.URL;
 
 /**
  * 网页可以处理:
@@ -36,32 +36,28 @@ import com.androlua.LuaWebView;
  * @author jingbin
  * link to https://github.com/youlookwhat/ByWebView
  */
-public class WebViewX extends com.androlua.LuaWebView {
+public class WebViewX extends LuaWebView {
 
     private android.webkit.WebView mWebView;
-    private View mErrorView;
-    private int mErrorLayoutId;
-    private String mErrorTitle;
-    private Context context;
+    private  NoAdWebViewClient noAdWebViewClient;
+    private LuaActivity luaActivity;
+    private String elementClass;
     private ByWebChromeClient mWebChromeClient;
 
     public WebViewX(LuaActivity luaActivity) {
         super(luaActivity);
         mWebView = this;
-        context = luaActivity.getContext();
-        FrameLayout parentLayout = new FrameLayout(luaActivity);
-//        parentLayout.addView(mWebView, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        luaActivity = luaActivity;
         // 配置
         handleSetting();
 //        // 视频、照片、进度条
         mWebChromeClient = new ByWebChromeClient(luaActivity, this);
-//
         mWebView.setWebChromeClient(mWebChromeClient);
-//
 //        // 错误页面、页面结束、处理DeepLink
 //        ByWebViewClient mByWebViewClient = new ByWebViewClient(luaActivity, this);
-//
-        mWebView.setWebViewClient(new NoAdWebViewClient(luaActivity,mWebView));
+
+        noAdWebViewClient = new NoAdWebViewClient(luaActivity,this);
+
     }
 
 
@@ -93,48 +89,36 @@ public class WebViewX extends com.androlua.LuaWebView {
         // 使用localStorage则必须打开
         ws.setDomStorageEnabled(true);
         // 排版适应屏幕
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            ws.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
-        } else {
-            ws.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
-        }
+        ws.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
         // WebView是否新窗口打开(加了后可能打不开网页)
 //        ws.setSupportMultipleWindows(true);
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             // WebView从5.0开始默认不允许混合模式,https中不能加载http资源,需要设置开启。
             ws.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
         }
-
-
-        mWebView.setOnKeyListener(new OnKeyListener() {
-            @Override
-            public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                if (keyEvent.getAction() == KeyEvent.ACTION_DOWN) {
-                    if (keyEvent.getAction() == KeyEvent.KEYCODE_BACK && mWebView.canGoBack()) {
-                        mWebView.goBack();
-                        return true;
-                    }
-                }
-                return false;
-            }
-        });
-
-
     }
 
-/*    public void loadUrl(String url) {
+
+
+    public void loadUrlX(String url,String elementClass ) {
+
         if (!TextUtils.isEmpty(url) && url.endsWith("mp4") && Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP_MR1) {
             mWebView.loadData(ByWebTools.getVideoHtmlBody(url), "text/html", "UTF-8");
         } else {
+
+            if (elementClass != null){
+                this.elementClass = elementClass;
+            }
+
+            System.out.println("likefr------获取class元素1111111111111111111" + elementClass);
+            mWebView.setWebViewClient(noAdWebViewClient);
             mWebView.loadUrl(url);
         }
-        hideErrorView();
-    }*/
 
-    public void reload() {
-        hideErrorView();
-        mWebView.reload();
+    }
+
+    public String getElementClass() {
+        return elementClass;
     }
 
     public void onResume() {
@@ -148,7 +132,8 @@ public class WebViewX extends com.androlua.LuaWebView {
         mWebView.resumeTimers();
     }
 
-/*    public void onDestroy() {
+
+    public void onDestroy() {
         if (mWebChromeClient != null && mWebChromeClient.getVideoFullView() != null) {
             mWebChromeClient.getVideoFullView().removeAllViews();
         }
@@ -165,7 +150,7 @@ public class WebViewX extends com.androlua.LuaWebView {
             mWebView.destroy();
             mWebView = null;
         }
-    }*/
+    }
 
     /**
      * 选择图片之后的回调，在Activity里onActivityResult调用
@@ -176,74 +161,35 @@ public class WebViewX extends com.androlua.LuaWebView {
         }
     }
 
-    public boolean handleKeyEvent(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            return isBack();
-        }
-        return false;
-    }
+//    public boolean handleKeyEvent(int keyCode, KeyEvent event) {
+//        if (keyCode == KeyEvent.KEYCODE_BACK) {
+//            return isBack();
+//        }
+//        return false;
+//    }
 
-    @SuppressLint("SourceLockedOrientationActivity")
-    public boolean isBack() {
-        // 全屏播放退出全屏
-        if (mWebChromeClient.inCustomView()) {
-            mWebChromeClient.onHideCustomView();
-            return true;
-
-            // 返回网页上一页
-        } else if (mWebView.canGoBack()) {
-            hideErrorView();
-            mWebView.goBack();
-            return true;
-        }
-        return false;
-    }
+//    public boolean isBack() {
+//        // 全屏播放退出全屏
+//        if (mWebChromeClient.inCustomView()) {
+//            mWebChromeClient.onHideCustomView();
+//            System.out.print("likefr -----isBack" + "isBack: 视频返回");
+//            return true;
+//
+//            // 返回网页上一页
+//        } else if (mWebView.canGoBack()) {
+//            mWebView.goBack();
+//            System.out.print("likefr -----isBack"+ "isBack: 返回");
+//            return true;
+//        }
+//        return false;
+//    }
 
     public android.webkit.WebView getWebView() {
         return mWebView;
     }
 
 
-    /**
-     * 显示错误布局
-     */
-    public void showErrorView() {
-        try {
-            if (mErrorView == null) {
-                FrameLayout parent = (FrameLayout) mWebView.getParent();
-                mErrorView = LayoutInflater.from(parent.getContext()).inflate((mErrorLayoutId == 0) ? R.layout.by_load_url_error : mErrorLayoutId, null);
-                mErrorView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        reload();
-                    }
-                });
-                parent.addView(mErrorView, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-            } else {
-                mErrorView.setVisibility(View.VISIBLE);
-            }
-            mWebView.setVisibility(View.INVISIBLE);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
-    /**
-     * 隐藏错误布局
-     */
-    public void hideErrorView() {
-        if (mErrorView != null) {
-            mErrorView.setVisibility(View.GONE);
-        }
-    }
-
-    public View getErrorView() {
-        return mErrorView;
-    }
-
-    String getErrorTitle() {
-        return mErrorTitle;
-    }
 
 
     /**
@@ -263,16 +209,24 @@ public class WebViewX extends com.androlua.LuaWebView {
             mWebChromeClient.setFixScreenLandscape(fixScreenLandscape);
         }
     }
-@Override
-    public boolean onKeyDown(int var1, KeyEvent var2) {
-        if (var1 == 4 && this.canGoBack()) {
-            this.goBack();
-            return true;
-        } else {
-            return super.onKeyDown(var1, var2);
-        }
+
+    @Override
+    public void goBack() {
+        super.goBack();
     }
 
 
 
+    /*
+    @Override
+    public boolean onKeyDown(int i, KeyEvent keyEvent) {
+        if (i == 4 && this.canGoBack()) {
+            this.goBack();
+            System.out.print("likefr -----isBack"+ "isBack: 页面返回2");
+            return true;
+        } else {
+            return super.onKeyDown(i, keyEvent);
+        }
+
+    }*/
 }

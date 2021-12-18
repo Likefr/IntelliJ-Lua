@@ -16,15 +16,15 @@ import com.androlua.LuaActivity;
  * Created by BrainWang on 05/01/2016.
  */
 public class NoAdWebViewClient extends WebViewClient {
-    private WebView webView;
+    private WebViewX webView;
     private boolean isClose;
     private LuaActivity mActivity;
+    public  String elementClass;
 
-
-    NoAdWebViewClient( LuaActivity activity,WebView webView) {
+    NoAdWebViewClient( LuaActivity activity,WebViewX webView) {
         mActivity = activity;
         this.webView = webView;
-
+//        this.elementClass = elementClass;
     }
 
     @Override
@@ -49,12 +49,15 @@ public class NoAdWebViewClient extends WebViewClient {
         }).start();
     }
 
+    @SuppressLint("HandlerLeak")
     Handler handler = new Handler() {
         @SuppressLint("HandlerLeak")
         @Override
         public void handleMessage(Message msg) {
-            String js = getClearAdDivJs(mActivity.getContext());
-            webView.loadUrl(js);
+            String clas = getClearAdDivJs(mActivity.getApplicationContext());
+//            String js = getClearAdDivId(mActivity.getApplicationContext());
+            webView.loadUrl(clas);
+//            webView.loadUrl(js);
         }
     };
 
@@ -72,20 +75,26 @@ public class NoAdWebViewClient extends WebViewClient {
         isClose = false;
     }
 
-    public static String getClearAdDivJs(Context context) {
+    public String getClearAdDivJs(Context context) {
+        String js = "javascript:";
+//        Resources res = context.getResources();
+//        String[] Adclass = res.getStringArray(R.array.Adclass);
+        String Adclass = webView.getElementClass();
+        for (String k : Adclass.split(",")) {
+
+        js += "var paras = document.getElementsByClassName('" + k + "'); for(i=0;i<paras.length;i++){if (paras[i] != null)paras[i].parentNode.removeChild( paras[i]);} ";
+            Log.d("likefr----正在屏蔽class", k);
+        }
+        return js;
+    }
+    public static String getClearAdDivId(Context context) {
         String js = "javascript:";
         Resources res = context.getResources();
         String[] Adid = res.getStringArray(R.array.Adid);
-        String[] Adclass = res.getStringArray(R.array.Adclass);
         for (int i = 0; i < Adid.length; i++) {
             js += "var adDiv" + i + " = document.getElementById('" + Adid[i] + "');if(adDiv" + i + " != null);adDiv" + i + ".parentNode.removeChild(adDiv" + i + ");";
             Log.d("likefr----正在屏蔽id", Adid[i]);
         }
-        for (int k = 0; k < Adclass.length; k++) {
-                    js += "var paras = document.getElementsByClassName('" + Adclass[k] + "'); for(i=0;i<paras.length;i++){if (paras[i] != null)paras[i].parentNode.removeChild( paras[i]);} ";
-            Log.d("likefr----正在屏蔽class", Adclass[k]);
-        }
         return js;
-
     }
 }
