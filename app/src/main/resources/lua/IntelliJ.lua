@@ -27,6 +27,7 @@ import "com.Likefr.Bootstrap.View.*"
 import "com.Likefr.LuaJava.utils.*"
 import "com.Likefr.Bootstrap.View.font.*"
 import "com.Likefr.Bootstrap.View.api.defaults.*"
+import "view_mode"
 R = luajava.bindClass("com.Likefr.LuaJava.R")
 import "android.graphics.PorterDuffColorFilter"
 import "android.graphics.drawable.GradientDrawable"
@@ -45,11 +46,11 @@ function OutText(path, str)
     editConfig.dismiss();
 end
 
-function OutStyle(url, ad, js, ua)
+function OutStyle(status,url, ad, js, ua)
     Config = [[
   {
-  "status":"successful",
   "data":{
+  "status":"]] .. status .. [[",
   "url":"]] .. url .. [[",
    "ad":"]] .. ad .. [[",
    "js":"]] .. js .. [[",
@@ -80,6 +81,7 @@ end--函数结束
 function ReturnEditConfig()
     dataModel = {}
     dataModel._TYPE = {
+        "status",
         "url",
         "ad",
         "js",
@@ -100,6 +102,7 @@ function ReturnConfig()
 
         dataModel = {}
         dataModel._TYPE = {
+            "status",
             "url",
             "ad",
             "js",
@@ -116,6 +119,7 @@ function ReturnConfig()
         data = io.open(activity.getLuaDir() .. "/config.json"):read("*a")
         data = cjson.decode(data)
         data = dataModel.fromJson(data.data)
+
         webSettings = webview.getSettings();
         webSettings.setJavaScriptEnabled(true)
         webSettings.setUseWideViewPort(true);
@@ -138,18 +142,12 @@ function ReturnConfig()
 
 
 
-webview.setWebViewClient{
-  onPageFinished=function(view,url)
-    --网页加载完成
---     屏蔽元素(webview,{data.ad})
-  end
-  }
 
 
 function 加载js(id,js)
   if js==nil then
    else
-      id.loadUrlX("javascript:".."(function() {"..js.."})()")
+      id.loadUrl("javascript:".."(function() {"..js.."})()")
   end
 end
 
@@ -159,7 +157,35 @@ function 屏蔽元素(id,table)
     加载js(id,[[document.getElementsByClassName(']]..V..[[')[0].style.display='none';]])
      end
 end
-        webview.loadUrlX(data.url,data.ad)--加载网页
+        if (data.status == "WebViewX") then
+            webview.loadUrl(data.url,data.ad)--加载网页
+        else
+--状态监听
+webview.setWebViewClient{
+  shouldOverrideUrlLoading=function(view,url)
+    --Url即将跳转
+    local likefr=activity.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE).getActiveNetworkInfo();
+    if likefr== nil then
+     print"请连接网络后重试"
+     参数="data:text/html;base64,PCFET0NUWVBFIGh0bWwgUFVCTElDICItLy9XM0MvL0RURCBYSFRNTCAxLjAgVHJhbnNpdGlvbmFsLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL1RSL3hodG1sMS9EVEQveGh0bWwxLXRyYW5zaXRpb25hbC5kdGQiPg08aHRtbCB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94aHRtbCI+DTxoZWFkPg08bWV0YSBodHRwLWVxdWl2PSJDb250ZW50LVR5cGUiIGNvbnRlbnQ9InRleHQvaHRtbDsgY2hhcnNldD11dGYtOCIgLz4NPG1ldGEgbmFtZT0idmlld3BvcnQiIGNvbnRlbnQ9IndpZHRoPWRldmljZS13aWR0aCwgaW5pdGlhbC1zY2FsZT0xLjAsIHVzZXItc2NhbGFibGU9bm8sIG1pbmltdW0tc2NhbGU9MS4wLCBtYXhpbXVtLXNjYWxlPTEuMCIvPjx0aXRsZT7plJnor6/mj5DnpLo8L3RpdGxlPg08c3R5bGUgdHlwZT0idGV4dC9jc3MiPg0KKnsgcGFkZGluZzogMDsgbWFyZ2luOiAwOyB9DQpib2R5eyBiYWNrZ3JvdW5kOiAjZmZmOyBmb250LWZhbWlseTogJ+W+rui9r+mbhem7kSc7IGNvbG9yOiAjMzMzOyBmb250LXNpemU6IDE2cHg7IH0NCi5zeXN0ZW0tbWVzc2FnZXsgcGFkZGluZzogMjRweCA0OHB4OyB9DQouc3lzdGVtLW1lc3NhZ2UgaDF7IGZvbnQtc2l6ZTogMTAwcHg7IGZvbnQtd2VpZ2h0OiBub3JtYWw7IGxpbmUtaGVpZ2h0OiAxMjBweDsgbWFyZ2luLWJvdHRvbTogMTJweDsgfQ0KLnN5c3RlbS1tZXNzYWdlIC5qdW1weyBwYWRkaW5nLXRvcDogMTBweH0NCi5zeXN0ZW0tbWVzc2FnZSAuc3VjY2Vzcywuc3lzdGVtLW1lc3NhZ2UgLmVycm9yeyBsaW5lLWhlaWdodDogMS44ZW07IGZvbnQtc2l6ZTogMzZweCB9DQo8L3N0eWxlPg08L2hlYWQ+DTxib2R5Pg08ZGl2IGNsYXNzPSJzeXN0ZW0tbWVzc2FnZSI+DTxoMT46KDwvaDE+DTxwIGNsYXNzPSJlcnJvciI+572R57uc6L+e5o6l5byC5bi4PC9wPjxwIGNsYXNzPSJkZXRhaWwiPjwvcD4NPHAgY2xhc3M9Imp1bXAiPg3ml6Dms5Xov57mjqXliLDmnI3liqHlmajvvIzor7fmo4Dmn6XmgqjnmoTnvZHnu5zov57mjqUNPC9kaXY+DTwvYm9keT4NPC9odG1sPg=="
+     webview.loadUrl(参数)
+    end
+
+  end,
+  onPageStarted=function(view,url,favicon)
+    --网页加载
+   屏蔽元素(webview,{data.ad})
+  end,
+  onPageFinished=function(view,url)
+    --网页加载完成
+      屏蔽元素(webview,{data.ad})
+  end}
+
+
+
+                webview.loadUrl(data.url)--加载网页
+        end
+
         return data;
     else
         return "该工程没有config文件"
@@ -1862,23 +1888,23 @@ function Translate(str)
 end
 
 function 波纹(id, color)
-    import "android.content.res.ColorStateList"
-    local attrsArray = { android.R.attr.selectableItemBackgroundBorderless }
-    local typedArray = activity.obtainStyledAttributes(attrsArray)
-    ripple = typedArray.getResourceId(0, 0)
-    Pretend = activity.Resources.getDrawable(ripple)
-    Pretend.setColor(ColorStateList(int[0].class { int {} }, int { color }))
-    id.setBackground(Pretend.setColor(ColorStateList(int[0].class { int {} }, int { color })))
+--     import "android.content.res.ColorStateList"
+--     local attrsArray = { android.R.attr.selectableItemBackgroundBorderless }
+--     local typedArray = activity.obtainStyledAttributes(attrsArray)
+--     ripple = typedArray.getResourceId(0, 0)
+--     Pretend = activity.Resources.getDrawable(ripple)
+--     Pretend.setColor(ColorStateList(int[0].class { int {} }, int { color }))
+--     id.setBackground(Pretend.setColor(ColorStateList(int[0].class { int {} }, int { color })))
 end
 
 function 列表波纹(color)
-    import "android.content.res.ColorStateList"
-    local attrsArray = { android.R.attr.selectableItemBackgroundBorderless }
-    local typedArray = activity.obtainStyledAttributes(attrsArray)
-    ripple = typedArray.getResourceId(0, 0)
-    Pretend = activity.Resources.getDrawable(ripple)
-    Pretend.setColor(ColorStateList(int[0].class { int {} }, int { color }))
-    return Pretend.setColor(ColorStateList(int[0].class { int {} }, int { color }))
+--     import "android.content.res.ColorStateList"
+--     local attrsArray = { android.R.attr.selectableItemBackgroundBorderless }
+--     local typedArray = activity.obtainStyledAttributes(attrsArray)
+--     ripple = typedArray.getResourceId(0, 0)
+--     Pretend = activity.Resources.getDrawable(ripple)
+--     Pretend.setColor(ColorStateList(int[0].class { int {} }, int { color }))
+--     return Pretend.setColor(ColorStateList(int[0].class { int {} }, int { color }))
 end
 
 function 随机数(a, b)

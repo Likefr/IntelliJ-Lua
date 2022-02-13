@@ -20,6 +20,7 @@ import "android.util.Base64"
 import "android.Manifest"
 import "java.lang.*"
 import "android.util.*"
+import "view_mode"
 import "android.graphics.Typeface"
 import "android.content.res.ColorStateList"
 import "android.graphics.drawable.GradientDrawable"
@@ -248,6 +249,61 @@ function create_navi_dlg()
  end
  navi_dlg.setContentView(navi_list)
 end
+
+
+
+function Add_WebviewX_Project(appname, kkk)
+
+ local init = minicrypto.decrypt(activity.getString(R.string.CreatePath1), activity.getString(R.string.app_name))
+ local main = minicrypto.decrypt(activity.getString(R.string.CreatePath2), activity.getString(R.string.app_name))
+ local layout = minicrypto.decrypt(activity.getString(R.string.WebViewX_Layout), activity.getString(R.string.app_name)) -- 5
+ local config = minicrypto.decrypt(activity.getString(R.string.WebViewX_Config), activity.getString(R.string.app_name))
+appname = tostring(appname)
+init = tostring(init)
+inits = tostring(inits)
+main = tostring(main)
+ local back = tostring(File(path .. tostring(appname)).exists())
+ if back == true then
+  print(appname .. "已存在", info)
+  else
+  local inits = string.gsub(init, "APP名", appname)
+  local inits = string.gsub(inits, "包名", kkk)
+  local main = string.gsub(main, "APP名", appname)
+  -- local configFile=io.open(activity.getLuaDir("/model/config")):read("*a")
+  File(path .. appname).mkdir()
+  io.open(path .. appname .. "/init.lua", "w"):write(inits):close()
+  io.open(path .. appname .. "/main.lua", "w"):write(main):close()
+  io.open(path .. appname .. "/layout.aly", "w"):write(layout):close()
+  io.open(path .. appname .. "/config.json", "w"):write(config):close()
+  -- io.open(path..appname.."/main.lua","a+"):write(configFile):close()
+  print("创建web工程成功", success)
+
+  Dialike()
+  .setGravity("center")-- 设置对话框位置
+  .setWidth("90%w", "wrap")--第1个为宽度 第2个为高度。一般不用设置 他会自适应
+  .setTitle("提示")
+  .setMessage("是否立即打开项目: " .. appname)
+  .setMessageSize("18dp")
+  .setElevation("12dp")
+  .setMessageColor(wbColor)
+  .setRadius("12dp")
+  .setFocusable(true)--false 返回键直接终止该程序。默认为true 即允许返回键关闭对话框
+  .setOutsideTouchable(true)--设置外部区域不可点击。
+  --.setBackground(0xffff8080)--设置对话框底层背景
+  .setCardBackground(background)--设置对话框背景
+  .setButtonSize(3, 20)--第1个参数为按钮 一共三个值分别 1-2-3  第2个为字体大小) 可重载
+  .setPositiveButton("打开", function()
+   content = io.open(path .. appname .. "/main.lua"):read("*a")
+   activity.newActivity("CodeController", { appname, appname, content })
+  end)
+  .setNegativeButton("取消", function()
+  end)
+  .show()
+
+  projectRefresh()
+ end
+end
+
 
 function Add_Webview_Project(appname, kkk)
 
@@ -498,21 +554,29 @@ function addProjects(t)
    Typeface = 字体("mono");
   };
   {
-   MyEditText({
-    Hint = "工程名";
+   EditTextX;
     id = "projectName";
-    backgroundColor = background;
-   });
    layout_width = "fill";
+   layout_margin= "20dp";
+   textColor= wbColor;
+       HintTextColor=wbColor;
+       Hint="项目名";
+         layout_height = "50dp";
+          bootstrapSize=DefaultBootstrapSize.LG;
+          bootstrapBrand=SUCCESS;
   },
   {
-   MyEditText({
+  EditTextX;
     Text = "com.",
     Hint = "包名";
-    backgroundColor = background;
+        HintTextColor=wbColor;
     id = "packageName";
-   });
-   layout_width = "fill";
+       textColor= wbColor;
+          layout_margin= "20dp";
+      layout_height = "50dp";
+         layout_width = "fill";
+           bootstrapSize=DefaultBootstrapSize.LG;
+           bootstrapBrand=SUCCESS;
   },
   {
    LinearLayout;
@@ -593,6 +657,8 @@ function addProjects(t)
  if Build.VERSION.SDK_INT >= 21 then
   mBottomSheetDialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
  end
+ packageName.setRounded(true)--变成圆角
+ projectName.setRounded(true)--变成圆角
  --显示Dialog
  mBottomSheetDialog.show();
 
@@ -830,12 +896,13 @@ function 全局扫描(t)
    layout_width = "fill",
 
    {
-    EditText;
+      EditTextX;
     id = "wbnr";
     Hint = "关键字";
-    singleLine = "true";
-    backgroundColor = background;
+    HintTextColor=wbColor;
     layout_width = "fill";
+               bootstrapSize=DefaultBootstrapSize.LG;
+               bootstrapBrand=SUCCESS;
    };
    {
     CardView;
@@ -1548,32 +1615,53 @@ function lookProject(t) --网站配置文件编辑弹窗
    CardBackgroundColor = "#ffa4b0be";
   };
   {
-   MyEditText({
+  ScrollView;
+    layout_width = "fill",
+    layout_height = "fill", --Dialog最终展开高度
+    {
+      LinearLayout,
+      layout_width = "fill",
+      layout_height = "fill", --Dialog最终展开高度
+      orientation = "vertical",
+  {
+   EditTextX;
     Hint = "加载链接";
     id = "url";
-    backgroundColor = background;
     Text = t.url,
-   });
    layout_width = "fill";
+              layout_margin="20dp";
+              layout_height="wrap";
+         textColor= wbColor;
+        HintTextColor=wbColor;
+              bootstrapSize=DefaultBootstrapSize.LG;
+              bootstrapBrand=SUCCESS;
   },
   {
-   MyEditText({
+EditTextX;
     Text = t.ad,
     Hint = "class元素";
-    backgroundColor = background;
     id = "ad";
-   });
    layout_width = "fill";
+           layout_margin="20dp";
+              layout_height="wrap";
+      textColor= wbColor;
+    HintTextColor=wbColor;
+           bootstrapSize=DefaultBootstrapSize.LG;
+           bootstrapBrand=SUCCESS;
   };
 
   {
-   MyEditText({
+EditTextX;
     Hint = "js";
     id = "js";
-    backgroundColor = background;
     Text = t.js,
-   });
    layout_width = "fill";
+              layout_margin="20dp";
+              layout_height="wrap";
+         textColor= wbColor;
+          HintTextColor=wbColor;
+              bootstrapSize=DefaultBootstrapSize.LG;
+              bootstrapBrand=SUCCESS;
   },
   --[[ {
     Spinner;
@@ -1583,13 +1671,17 @@ function lookProject(t) --网站配置文件编辑弹窗
     layout_height="56dp";
   };]]
   {
-   MyEditText({
+EditTextX;
     Text = t.ua,
     Hint = "自定义ua";
-    backgroundColor = background;
     id = "ua";
-   });
    layout_width = "fill";
+              layout_margin="20dp";
+              layout_height="wrap";
+         textColor= wbColor;
+    HintTextColor=wbColor;
+              bootstrapSize=DefaultBootstrapSize.LG;
+              bootstrapBrand=SUCCESS;
   };
   {
    CardView;
@@ -1599,7 +1691,7 @@ function lookProject(t) --网站配置文件编辑弹窗
    layout_width = "fill";
    CardBackgroundColor = 0xff339af0;
    onClick = function()
-    OutStyle(url.getText(), ad.getText(), js.getText(), ua.getText());
+    OutStyle(tostring(t.status),tostring(url.getText()), tostring(ad.getText()), tostring(js.getText()), tostring(ua.getText()));
    end;
    {
     TextView;
@@ -1614,6 +1706,8 @@ function lookProject(t) --网站配置文件编辑弹窗
    layout_width = "fill",
    layout_height = "100dp", --Dialog最终展开高度
    background = "#00000000",
+  };
+      };
   };
  })
 
@@ -1664,7 +1758,10 @@ ua.setText("Mozilla/5.0 (Android 9; MI 6) AppleWebKit/537.36 (KHTML) Version/4.0
 end]]
  --显示Dialog
  mBottomSheetDialog.show();
-
+url.setRounded(true)--变成圆角
+js.setRounded(true)--变成圆角
+ad.setRounded(true)--变成圆角
+ua.setRounded(true)--变成圆角
  CircleButton(ll, background, 50)
  --The View with the BottomSheetBehavior
  mBehavior.setBottomSheetCallback(BottomSheetBehavior.BottomSheetCallback {
@@ -2040,13 +2137,14 @@ function Project_PathS(t)
     id = "customize";
     BackgroundColor = background;
     {
-     MyEditText({
+    EditTextX;
       Hint = "手动输入项目路径";
       id = "editPath";
+          HintTextColor=wbColor;
+          textColor = wbColor;
+         layout_height= "50dp";
       gravity = "left|center",
       layout_gravity = "left|center",
-      backgroundColor = background;
-     });
      layout_gravity = "center";
      layout_width = "75%w";
     },
@@ -2099,7 +2197,7 @@ function Project_PathS(t)
 
  --显示Dialog
  mBottomSheetDialog.show();
-
+editPath.setRounded(true)--变成圆角
  --设置用户拖拽Dialog时状态
  CircleButton(ll, background, 30)
 
@@ -2698,6 +2796,7 @@ end
 luaprojectdir = luajava.luaextdir .. "/project/"
 function create_project()
  local appname = project_appName.getText().toString()
+ print(appname)
  local packagename = project_packageName.getText().toString()
  local f = File(luaprojectdir .. appname)
  if f.exists() then
@@ -2830,7 +2929,7 @@ function 导入()
   .setGravity("center")-- 设置对话框位置
   .setWidth("90%w","wrap")--第1个为宽度 第2个为高度。一般不用设置 他会自适应
   .setTitle("提示")
-  .setMessage("是否立即打开项目: "..appname)
+  .setMessage("是否立即打开项目: "..getName)
   .setMessageColor(wbColor)
   .setMessageSize("18dp")
   .setElevation("12dp")

@@ -428,7 +428,7 @@ function cclib.utf8.len(str) --获取中文字符长度
   local len = 0
   local currentIndex = 1
   while currentIndex <= #str do
-    local char = string.byte(str, currentIndex)
+    local char = string.byte(tostring(str), currentIndex)
     currentIndex = currentIndex + cclib.GetCharSize(char)
     len = len + 1
   end
@@ -438,7 +438,7 @@ end
 function cclib.utf8.sub(str, startChar, numChars) --截取中文字符串
   local startIndex = 1
   while startChar > 1 do
-    local char = string.byte(str, startIndex)
+    local char = string.byte(tostring(str), startIndex)
     startIndex = startIndex + cclib.GetCharSize(char)
     startChar = startChar - 1
   end
@@ -446,12 +446,12 @@ function cclib.utf8.sub(str, startChar, numChars) --截取中文字符串
   local currentIndex = startIndex
 
   while numChars > 0 and currentIndex <= #str do
-    local char = string.byte(str, currentIndex)
+    local char = string.byte(tostring(str), currentIndex)
     currentIndex = currentIndex + cclib.GetCharSize(char)
     numChars = numChars - 1
   end
 
-  return string.sub(str, startIndex, currentIndex - 1)
+  return string.sub(tostring(str), startIndex, currentIndex - 1)
 end
 
 local pyTable = {}

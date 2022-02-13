@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
             dirFirstFolder.mkdirs();
         }
 
-        if (isFirstIn == true && "com.Likefr.LuaJava".equals(getAppProcessName(MainActivity.this))) {
+        if (isFirstIn && "com.Likefr.LuaJava".equals(getAppProcessName(MainActivity.this))) {
 
             //首次启动
             setContentView(R.layout.onboarding_main_layout);

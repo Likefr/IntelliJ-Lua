@@ -142,6 +142,7 @@ return {
 "com.androlua.LuaWebView$OnDownloadStartListener",
 "com.androlua.LuaWebView$SimpleLuaWebViewClient",
 "com.androlua.LuaWebView",
+"com.Likefr.tencentx5.WebViewX",
 "com.androlua.NineBitmapDrawable",
 "com.androlua.R$drawable",
 "com.androlua.R$string",
@@ -169,6 +170,7 @@ return {
 "com.androlua.util.VolatileBox",
 "com.androlua.util.VolatileDispose",
 "com.androlua.util.ZipUtil",
+"com.luajava.LuaState",
 "com.nirenr.Color",
 "com.nirenr.ColorFinder",
 "com.nirenr.ColorPoint",
@@ -844,7 +846,6 @@ return {
 "android.webkit.URLUtil",
 "android.webkit.RenderProcessGoneDetail",
 "android.webkit.WebView",
-"com.Likefr.tencentx5.WebViewX"
 "android.webkit.ServiceWorkerController",
 "android.webkit.ConsoleMessage$MessageLevel",
 "android.app.Activity",
