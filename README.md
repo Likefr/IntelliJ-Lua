@@ -28,8 +28,12 @@ IntelliJ Lua是移植到Android平台的Lua解释器。其他人已经将 Lua �
 
 参考:
 <div>
+ <p>
 (AndroLua)[https://github.com/mkottman/AndroLua]
+  </p>
+   <p>
 (AndroLua_pro)[https://github.com/nirenr/AndroLua_pro]
+      </p>
  </div>
 ## Features 
  - [x] Android 11 export *.alp
