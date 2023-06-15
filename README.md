@@ -4,7 +4,7 @@
  <h2 align="center">GitHub Readme Stats</h2>
  <p align="center">Get dynamically generated GitHub stats on your readmes!</p>
 </p>
-<h3>个人项目</>
+<h3>个人项目</h3>
 IntelliJ Lua - [博客](https://likefr.com)
 =========================
 <p align="left">
@@ -27,8 +27,10 @@ IntelliJ Lua是移植到Android平台的Lua解释器。其他人已经将 Lua �
 
 
 参考:
+<div>
 (AndroLua)[https://github.com/mkottman/AndroLua]
 (AndroLua_pro)[https://github.com/nirenr/AndroLua_pro]
+ </div>
 ## Features 
  - [x] Android 11 export *.alp
  - [ ] Code style
